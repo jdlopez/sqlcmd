@@ -62,7 +62,7 @@ public class MainRunner {
         if (conf.getPrintHeader()) {
             for (int i = 1; i <= colCount; i++) {
                 out.print(rsmd.getColumnName(i));
-                if (i <= colCount)
+                if (i < colCount)
                     out.print(conf.getPrintFieldSeparator());
             }
             out.println();
@@ -70,11 +70,12 @@ public class MainRunner {
         while (resultSet.next()) {
             for (int i = 1; i <= colCount; i++) {
                 out.print(resultSet.getString(i));
-                if (i <= colCount)
+                if (i < colCount)
                     out.print(conf.getPrintFieldSeparator());
             } // for col
             out.println();
         } // while row
+        out.flush();
     }
 
     private static String readAll(InputStream in) throws IOException {
@@ -103,6 +104,11 @@ public class MainRunner {
             }
         else
             throw new ConfigException(null, "No arguments");
+        // default values (cant use constructor, explicit or implicit)
+        if (conf.getPrintFieldSeparator() == null)
+            conf.setPrintFieldSeparator("\t");
+        if (conf.getPrintHeader() == null)
+            conf.setPrintHeader(true);
         return conf;
     }
 }

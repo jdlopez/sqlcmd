@@ -1,15 +1,15 @@
 package es.jdlopez.sqlcmd;
 
 public class RunnerConfig {
-    private String inputSQL;
     private String jdbcDriverPath;
     private String jdbcDriverClass;
     private String jdbcUrl;
     private String jdbcUser;
     private String jdbcPass;
+    private String inputSQL;
     private String outputResult;
-    private boolean printHeader;
-    private String printFieldSeparator;
+    private Boolean printHeader = true;
+    private String printFieldSeparator = "\t";
 
     public String getInputSQL() {
         return inputSQL;
@@ -67,11 +67,11 @@ public class RunnerConfig {
         this.outputResult = outputResult;
     }
 
-    public boolean getPrintHeader() {
+    public Boolean getPrintHeader() {
         return printHeader;
     }
 
-    public void setPrintHeader(boolean printHeader) {
+    public void setPrintHeader(Boolean printHeader) {
         this.printHeader = printHeader;
     }
 
