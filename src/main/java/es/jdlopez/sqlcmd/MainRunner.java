@@ -90,19 +90,26 @@ public class MainRunner {
 
     private static RunnerConfig readArgs(String[] args) throws ConfigException {
         RunnerConfig conf = null;
-        if (args != null)
-            for (String a: args) {
+        if (args != null) {
+            Properties p = new Properties();
+            for (String a : args) {
                 if (a.startsWith("-c:")) { // config
-                    Properties p = new Properties();
                     try {
                         p.load(new FileReader(a.substring("-c:".length())));
                     } catch (IOException e) {
                         throw new ConfigException("configFile", "Reading config file", e);
                     }
-                    conf = BeanReader.fromProperties(p, RunnerConfig.class);
-                } // else if ... for any other args TODO
+                } else if (a != null && a.startsWith("-p:")) {
+                    String s = a.substring("-p:".length());
+                    int idxEq = s != null? s.indexOf("="):-1;
+                    if (idxEq < 0)
+                        throw new ConfigException(s, "Param argument must be: -p:name=value");
+                    else
+                        p.setProperty(s.substring(0, idxEq), s.substring(idxEq + 1));
+                }
             }
-        else
+            conf = BeanReader.fromProperties(p, RunnerConfig.class);
+        } else
             throw new ConfigException(null, "No arguments");
         // default values (cant use constructor, explicit or implicit)
         if (conf.getPrintFieldSeparator() == null)
