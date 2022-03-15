@@ -10,6 +10,16 @@ public class RunnerConfig {
     private String outputResult;
     private Boolean printHeader = true;
     private String printFieldSeparator = "\t";
+    // mail configuration:
+    private String mailSendTo;
+    private String mailHost;
+    private String mailPort;
+    private Boolean mailAuth;
+    private Boolean mailTLS;
+    private String mailUser;
+    private String mailPass;
+    private String mailFrom;
+    private String mailSubject;
 
     public String getInputSQL() {
         return inputSQL;
@@ -81,5 +91,77 @@ public class RunnerConfig {
 
     public void setPrintFieldSeparator(String printFieldSeparator) {
         this.printFieldSeparator = printFieldSeparator;
+    }
+
+    public String getMailSendTo() {
+        return mailSendTo;
+    }
+
+    public void setMailSendTo(String mailSendTo) {
+        this.mailSendTo = mailSendTo;
+    }
+
+    public String getMailHost() {
+        return mailHost;
+    }
+
+    public void setMailHost(String mailHost) {
+        this.mailHost = mailHost;
+    }
+
+    public String getMailPort() {
+        return mailPort;
+    }
+
+    public void setMailPort(String mailPort) {
+        this.mailPort = mailPort;
+    }
+
+    public Boolean getMailAuth() {
+        return mailAuth;
+    }
+
+    public void setMailAuth(Boolean mailAuth) {
+        this.mailAuth = mailAuth;
+    }
+
+    public Boolean getMailTLS() {
+        return mailTLS;
+    }
+
+    public void setMailTLS(Boolean mailTLS) {
+        this.mailTLS = mailTLS;
+    }
+
+    public String getMailUser() {
+        return mailUser;
+    }
+
+    public void setMailUser(String mailUser) {
+        this.mailUser = mailUser;
+    }
+
+    public String getMailPass() {
+        return mailPass;
+    }
+
+    public void setMailPass(String mailPass) {
+        this.mailPass = mailPass;
+    }
+
+    public String getMailFrom() {
+        return mailFrom;
+    }
+
+    public void setMailFrom(String mailFrom) {
+        this.mailFrom = mailFrom;
+    }
+
+    public String getMailSubject() {
+        return mailSubject;
+    }
+
+    public void setMailSubject(String mailSubject) {
+        this.mailSubject = mailSubject;
     }
 }

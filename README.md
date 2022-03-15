@@ -1,5 +1,7 @@
 # sqlcmd
-SQL command line executor using JDBC drivers. Useful for cron jobs and some automation. Porting of my previous sf.net code
+SQL command line executor using JDBC drivers. Useful for cron jobs and some automation.
+
+_Porting of my previous sf.net code_
 
 Usage:
 
@@ -8,10 +10,10 @@ Usage:
         FROM MY_TABLE
     EOF
 
-Config values:
+## Config values:
 
-* jdbcDriverPath=Path to jdbc driver jar (loaded dynamically)
-* jdbcDriverClass=Jdbc Driver class full name
+* jdbcDriverPath=Path to jdbc driver jar (loaded dynamically) if null it must be in classpath
+* jdbcDriverClass=Jdbc Driver class full name (no need if driver registers itself)
 * jdbcUrl=Jdbc connection URL
 * jdbcUser=
 * jdbcPass=
@@ -19,6 +21,23 @@ Config values:
 * outputResult=Path to output file (if not present uses stdout)
 * printHeader=true/false If true adds header with query's column name. Default true
 * printFieldSeparator=Field separator for printing. Default tab (\t)
+
+## Mail config values:
+
+Mail Server:
+* mailHost=SMTP host
+* mailPort=SMTP port
+* mailAuth=true/false smtp server needs authentication?
+* mailTLS=true/false smtp server needs TLS connection?
+* mailUser=smtp auth username
+* mailPass=smtp auth password
+* 
+Mail message:
+* mailFrom=Email addess in from field
+* mailSubject=Subject field
+* mailSendTo=Email addess in TO field
+
+## Config notes
 
 Config values can be set also with parameters:
 
