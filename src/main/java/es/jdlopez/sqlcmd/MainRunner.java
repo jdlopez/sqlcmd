@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -81,7 +80,11 @@ public class MainRunner {
                             config.getMailPort(),
                             config.getMailFrom());
                 }
-                sendMail.sendText(config.getMailSubject(), mailBody.toString(), config.getMailSendTo());
+                if (ResultFormatter.HTML.equalsIgnoreCase(config.getFormatterName()))
+                    sendMail.sendMime(config.buildFormatter().getMime(),
+                            config.getMailSubject(), mailBody.toString(), config.getMailSendTo());
+                else // careful 'no object DCH for MIME type csv or others needs activation
+                    sendMail.sendText(config.getMailSubject(), mailBody.toString(), config.getMailSendTo());
             }
 
         } finally {
@@ -91,44 +94,21 @@ public class MainRunner {
     }
 
     private static void writeUpdateCount(int updateCount, PrintWriter out, RunnerConfig config) {
-        String s;
-        if (config.getPrintHeader())
-            s = String.format("==================\nUpdateCount = %d\n==================", updateCount);
-        else
-            s = "UpdateCount = " + updateCount;
-        out.println(s);
-
+        ResultFormatter fmt = config.buildFormatter();
+        fmt.writeUpdate(out, updateCount);
     }
 
     private static void writeResultSet(ResultSet resultSet, PrintWriter out, RunnerConfig conf) throws SQLException {
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int colCount = rsmd.getColumnCount();
-        if (conf.getPrintHeader()) {
-            StringBuffer underline = new StringBuffer();
-            for (int i = 1; i <= colCount; i++) {
-                out.print(rsmd.getColumnName(i));
-                underline.append(repeatChar('=', rsmd.getColumnName(i).length()));
-                if (i < colCount) {
-                    out.print(conf.getPrintFieldSeparator());
-                    underline.append(conf.getPrintFieldSeparator());
-                }
-            }
-            out.println();
-            out.println(underline.toString());
-        } // header
+        ResultFormatter fmt = conf.buildFormatter();
+        fmt.writeBeginResultSet(out);
+        fmt.writeHeader(out, rsmd);
         while (resultSet.next()) {
-            for (int i = 1; i <= colCount; i++) {
-                out.print(resultSet.getString(i));
-                if (i < colCount)
-                    out.print(conf.getPrintFieldSeparator());
-            } // for col
-            out.println();
+            fmt.writeRow(out, resultSet, colCount);
         } // while row
         out.flush();
-    }
-
-    private static String repeatChar(char c, int length) {
-        return new String(new char[length]).replace('\0', c);
+        fmt.writeEndResultSet(out);
     }
 
     private static String readAll(InputStream in) throws IOException {
@@ -169,6 +149,8 @@ public class MainRunner {
             conf.setPrintFieldSeparator("\t");
         if (conf.getPrintHeader() == null)
             conf.setPrintHeader(true);
+        if (conf.getFormatterName() == null)
+            conf.setFormatterName("text");
         return conf;
     }
 }

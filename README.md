@@ -10,6 +10,8 @@ Usage:
         FROM MY_TABLE
     EOF
 
+If _mailSendTo_ configured the tool sends an email with formatted output.
+
 ## Config values:
 
 * jdbcDriverPath=Path to jdbc driver jar (loaded dynamically) if null it must be in classpath
@@ -19,8 +21,11 @@ Usage:
 * jdbcPass=
 * inputSQL=Path to input sql file (not required/optional if not present it uses stdin)
 * outputResult=Path to output file (if not present uses stdout)
+
+## Printing and formatting values:
 * printHeader=true/false If true adds header with query's column name. Default true
 * printFieldSeparator=Field separator for printing. Default tab (\t)
+* formatterName=Formatter type, possible values: text, html or csv (default text)
 
 ## Mail config values:
 

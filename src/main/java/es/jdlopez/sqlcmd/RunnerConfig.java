@@ -20,6 +20,21 @@ public class RunnerConfig {
     private String mailPass;
     private String mailFrom;
     private String mailSubject;
+    private String formatterName;
+
+    private ResultFormatter formatter = null;
+    public ResultFormatter buildFormatter() {
+        if (formatter == null) {
+            if (ResultFormatter.HTML.equalsIgnoreCase(formatterName))
+                formatter = new HtmlFormatter(this);
+            else if (ResultFormatter.CSV.equalsIgnoreCase(formatterName))
+                formatter = new CsvFormatter(this);
+            //if (ResultFormatter.TEXT.equalsIgnoreCase(formatterName))
+            else
+                formatter = new TextFormatter(this);
+        }
+        return formatter;
+    }
 
     public String getInputSQL() {
         return inputSQL;
@@ -163,5 +178,13 @@ public class RunnerConfig {
 
     public void setMailSubject(String mailSubject) {
         this.mailSubject = mailSubject;
+    }
+
+    public String getFormatterName() {
+        return formatterName;
+    }
+
+    public void setFormatterName(String formatterName) {
+        this.formatterName = formatterName;
     }
 }

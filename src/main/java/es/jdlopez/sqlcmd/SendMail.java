@@ -56,4 +56,14 @@ public class SendMail {
 
 	    Transport.send(msg);
     }
+
+    public void sendMime(String mime, String subject, String body, String to) throws MessagingException {
+        Session session = Session.getInstance(sessionProps, auth);
+        Message msg = new MimeMessage(session);
+        msg.setFrom(new InternetAddress(from));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+        msg.setSubject(subject);
+        msg.setContent(body, mime);
+        Transport.send(msg);
+    }
 }
