@@ -26,6 +26,7 @@ If _mailSendTo_ configured the tool sends an email with formatted output.
 * printHeader=true/false If true adds header with query's column name. Default true
 * printFieldSeparator=Field separator for printing. Default tab (\t)
 * formatterName=Formatter type, possible values: text, html or csv (default text)
+* charset=Charset, to force output file charset. Default: jvm default charset
 
 ## Mail config values:
 

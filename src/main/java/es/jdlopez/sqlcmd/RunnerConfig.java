@@ -23,9 +23,9 @@ public class RunnerConfig {
     private String mailFrom;
     private String mailSubject;
     private String formatterName;
+    private String charset;
 
     private ResultFormatter formatter = null;
-    private String charset;
 
     public ResultFormatter buildFormatter() {
         if (formatter == null) {
