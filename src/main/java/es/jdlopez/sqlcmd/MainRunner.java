@@ -1,14 +1,18 @@
 package es.jdlopez.sqlcmd;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -39,8 +43,12 @@ public class MainRunner {
         }
         else if (config.getOutputResult() == null)
             out = new PrintWriter(System.out, true);
+        else if (config.getCharset() != null)
+            out = new PrintWriter(new FileOutputStream(config.getOutputResult()), true,
+                    Charset.forName(config.getCharset()));
         else
             out = new PrintWriter(config.getOutputResult());
+
 
         Connection conn = null;
         try {

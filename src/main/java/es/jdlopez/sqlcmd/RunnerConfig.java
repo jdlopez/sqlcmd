@@ -1,5 +1,7 @@
 package es.jdlopez.sqlcmd;
 
+import java.nio.charset.Charset;
+
 public class RunnerConfig {
     private String jdbcDriverPath;
     private String jdbcDriverClass;
@@ -23,6 +25,8 @@ public class RunnerConfig {
     private String formatterName;
 
     private ResultFormatter formatter = null;
+    private String charset;
+
     public ResultFormatter buildFormatter() {
         if (formatter == null) {
             if (ResultFormatter.HTML.equalsIgnoreCase(formatterName))
@@ -186,5 +190,13 @@ public class RunnerConfig {
 
     public void setFormatterName(String formatterName) {
         this.formatterName = formatterName;
+    }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public void setCharset(String charset) {
+        this.charset = charset;
     }
 }
